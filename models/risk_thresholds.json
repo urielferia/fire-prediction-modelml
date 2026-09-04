@@ -1,0 +1,10 @@
+{
+  "medium_threshold": 0.0211866617961697,
+  "high_threshold": 0.19266625233064014,
+  "medium_percentile": 90,
+  "high_percentile": 99,
+  "n_validation_rows": 1269747,
+  "prob_min": 0.0,
+  "prob_max": 1.0,
+  "prob_mean": 0.009972852859664169
+}

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mexico Wildfire Risk Map — Dynamic Choropleth 2015–2026</title>
+  <meta name="description" content="Interactive nationwide Mexico wildfire risk map with timeline slider from 2015 to 2026, dynamic municipality risk coloring, and meteorological conditions inspection." />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- App styles -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- ── Header bar ─────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <!-- Live Nationwide Stats for active date -->
+      <div class="topbar__stats">
+        <div class="stat-pill stat-pill--high">
+          <span class="stat-pill__dot"></span>
+          <span class="stat-pill__label">High Risk:</span>
+          <strong class="stat-pill__val" id="stat-high">0</strong>
+        </div>
+        <div class="stat-pill stat-pill--med">
+          <span class="stat-pill__dot"></span>
+          <span class="stat-pill__label">Med Risk:</span>
+          <strong class="stat-pill__val" id="stat-med">0</strong>
+        </div>
+        <div class="stat-pill stat-pill--fires">
+          <span class="stat-pill__dot"></span>
+          <span class="stat-pill__label">Active Fires:</span>
+          <strong class="stat-pill__val" id="stat-fires">0</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar__right">
+      <!-- Municipality Search -->
+      <div class="search-box">
+        <svg class="search-box__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="muni-search-input" class="search-box__input" placeholder="Search municipality (e.g. Calvillo, Tlalpan)..." autocomplete="off" />
+        <div class="search-results" id="search-results" style="display: none;"></div>
+      </div>
+
+      <div class="topbar__badge">
+        <span class="pulse-dot"></span>
+        Calibrated LightGBM · ROC-AUC 0.967
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main Map Canvas ──────────────────────────────────────── -->
+  <main class="map-layout">
+    <div id="map" class="choropleth-map"></div>
+
+    <!-- Floating Map Controls (Top-Left) -->
+    <div class="map-controls">
+      <button class="btn-map-control" id="btn-reset-view" title="Reset View to Entire Mexico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <span>Reset Mexico View</span>
+      </button>
+    </div>
+
+    <!-- Floating Choropleth Legend (Bottom-Left) -->
+    <div class="map-legend">
+      <div class="map-legend__header">
+        <span class="map-legend__title">Wildfire Risk Classification</span>
+      </div>
+      <div class="map-legend__items">
+        <div class="map-legend__item">
+          <span class="legend-swatch legend-swatch--high"></span>
+          <div class="legend-info">
+            <span class="legend-info__label">High Risk</span>
+            <span class="legend-info__sub" id="legend-range-high">≥ 19.27%</span>
+          </div>
+        </div>
+        <div class="map-legend__item">
+          <span class="legend-swatch legend-swatch--med"></span>
+          <div class="legend-info">
+            <span class="legend-info__label">Medium Risk</span>
+            <span class="legend-info__sub" id="legend-range-med">2.12% – 19.27%</span>
+          </div>
+        </div>
+        <div class="map-legend__item">
+          <span class="legend-swatch legend-swatch--low"></span>
+          <div class="legend-info">
+            <span class="legend-info__label">Low Risk</span>
+            <span class="legend-info__sub" id="legend-range-low">&lt; 2.12%</span>
+          </div>
+        </div>
+        <div class="map-legend__item">
+          <span class="legend-swatch legend-swatch--fire">🔥</span>
+          <div class="legend-info">
+            <span class="legend-info__label">Confirmed Fire</span>
+            <span class="legend-info__sub">Recorded Ignition</span>
+          </div>
+        </div>
+      </div>
+      <div class="map-legend__hint">Click any municipality to inspect & zoom in</div>
+    </div>
+
+    <!-- Municipality Detail Side Drawer (Appears on click) -->
+    <aside class="detail-drawer" id="detail-drawer">
+      <div class="detail-drawer__inner">
+        <div class="detail-drawer__header">
+          <div>
+            <div class="detail-drawer__subtitle" id="dt-state">State Name</div>
+            <h2 class="detail-drawer__title" id="dt-municipality">Municipality Name</h2>
+            <div class="detail-drawer__cve">CVEGEO: <code id="dt-cvegeo">00000</code> · <span id="dt-date">2024-05-15</span></div>
+          </div>
+          <button class="btn-close-drawer" id="btn-close-drawer" aria-label="Close detail panel">✕</button>
+        </div>
+
+        <div class="detail-drawer__source-badge" id="dt-source-badge">
+          ERA5 Reanalysis (Historical Dataset)
+        </div>
+
+        <!-- Risk Card -->
+        <div class="detail-risk-card">
+          <div class="detail-risk-card__header">
+            <div>
+              <div class="detail-risk-card__label">Calibrated Fire Probability</div>
+              <div class="detail-risk-card__val" id="dt-prob">0.0%</div>
+            </div>
+            <div class="risk-badge" id="dt-risk-badge">LOW</div>
+          </div>
+          <div class="prob-bar-track">
+            <div class="prob-bar-fill" id="dt-prob-bar" style="width: 0%;"></div>
+          </div>
+          <div class="detail-risk-card__fire-status" id="dt-fire-status">
+            No active wildfires recorded on this date
+          </div>
+        </div>
+
+        <!-- Meteorological Conditions Grid -->
+        <div class="detail-section-title">Meteorological Conditions</div>
+        <div class="weather-grid" id="dt-weather-grid">
+          <div class="weather-card" title="Maximum daily 2m air temperature">
+            <span class="weather-card__icon">🌡️</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Max Temp</span>
+              <span class="weather-card__val" id="dt-w-temp-max">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Minimum daily 2m air temperature">
+            <span class="weather-card__icon">❄️</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Min Temp</span>
+              <span class="weather-card__val" id="dt-w-temp-min">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Mean daily 2m air temperature">
+            <span class="weather-card__icon">☀️</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Mean Temp</span>
+              <span class="weather-card__val" id="dt-w-temp-mean">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Relative humidity daily average">
+            <span class="weather-card__icon">💧</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Humidity</span>
+              <span class="weather-card__val" id="dt-w-humidity">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Total daily precipitation sum">
+            <span class="weather-card__icon">🌧️</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Precipitation</span>
+              <span class="weather-card__val" id="dt-w-precip">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Maximum wind speed at 10m">
+            <span class="weather-card__icon">💨</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Wind Speed</span>
+              <span class="weather-card__val" id="dt-w-wind">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Maximum wind gusts at 10m">
+            <span class="weather-card__icon">🍃</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Wind Gusts</span>
+              <span class="weather-card__val" id="dt-w-gusts">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Reference evapotranspiration (FAO-56)">
+            <span class="weather-card__icon">🌾</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Evapotranspiration</span>
+              <span class="weather-card__val" id="dt-w-et0">—</span>
+            </div>
+          </div>
+          <div class="weather-card" title="Consecutive dry days (< 1mm precipitation)">
+            <span class="weather-card__icon">🏜️</span>
+            <div class="weather-card__body">
+              <span class="weather-card__label">Dry Streak</span>
+              <span class="weather-card__val" id="dt-w-dry">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-drawer__footer">
+          <button class="btn-zoom-out" id="btn-zoom-out">Zoom Out to Full Map</button>
+          <div class="model-note">Thresholds: Medium ≥ 2.12% · High ≥ 19.27%</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Error / Info Toast -->
+    <div class="toast" id="toast" role="alert" aria-atomic="true"></div>
+  </main>
+
+  <!-- ── Floating Interactive Timeline Slider Dock (Bottom) ──────────────── -->
+  <footer class="timeline-bar">
+    <div class="timeline-bar__inner">
+
+      <!-- Playback Controls -->
+      <div class="timeline-controls">
+        <button class="btn-timeline-nav" id="btn-prev-day" title="Previous Day">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <button class="btn-play-pause" id="btn-play-pause" title="Play / Pause Time Animation">
+          <svg class="icon-play" id="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          <svg class="icon-pause" id="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+
+        <button class="btn-timeline-nav" id="btn-next-day" title="Next Day">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <select class="speed-select" id="speed-select" title="Playback Speed">
+          <option value="400">1x</option>
+          <option value="200" selected>2x</option>
+          <option value="100">5x</option>
+        </select>
+      </div>
+
+      <!-- Scrubber & Date Indicator -->
+      <div class="timeline-scrubber">
+        <div class="timeline-meta">
+          <div class="timeline-date-display">
+            <span class="timeline-day-name" id="display-weekday">Wednesday</span>,
+            <strong class="timeline-calendar-date" id="display-date">May 15, 2024</strong>
+            <span class="timeline-season-tag" id="display-season">Peak Wildfire Season</span>
+          </div>
+
+          <div class="timeline-presets">
+            <button class="btn-preset" data-date="2017-04-29">2017 Fire Peak</button>
+            <button class="btn-preset" data-date="2020-05-15">2020 Drought</button>
+            <button class="btn-preset" data-date="2024-05-15">2024 Fire Wave</button>
+            <button class="btn-preset" data-date="2025-05-15">2025 Baseline</button>
+            <button class="btn-preset btn-preset--today" id="preset-today" data-date="2026-09-04">Today</button>
+            <button class="btn-preset btn-preset--forecast" id="preset-forecast" data-date="2026-09-18">+15d Forecast</button>
+          </div>
+        </div>
+
+        <!-- The Date Range Slider -->
+        <div class="slider-wrapper">
+          <input type="range" id="date-slider" class="date-slider" min="0" max="4279" value="3422" step="1" />
+          <div class="slider-ticks">
+            <span class="slider-tick" style="left: 0%;">2015</span>
+            <span class="slider-tick" style="left: 17.5%;">2017</span>
+            <span class="slider-tick" style="left: 35%;">2019</span>
+            <span class="slider-tick" style="left: 52.5%;">2021</span>
+            <span class="slider-tick" style="left: 70%;">2023</span>
+            <span class="slider-tick" style="left: 87.5%;">2025</span>
+            <span class="slider-tick slider-tick--now" style="left: 99%;">2026 (+15d)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <!-- Local TopoJSON client library -->
+  <script src="/static/js/topojson-client.min.js"></script>
+  <!-- Application JS -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+================================================================================
+TAYUN WILDFIRE RISK PREDICTION — FUTURE TEST EXAMPLES (POST-2025 / FORECAST)
+================================================================================
+Generated: 2026-09-03 (Local Environment Reference Date)
+Valid Forecast Horizon: Today (2026-09-03) through Today + 15 Days (2026-09-18)
+Meteorological Source: Open-Meteo Numerical Weather Prediction API (16-Day Forecast)
+Endpoints:
+  - Web UI:   http://127.0.0.1:5000/
+  - API POST: http://127.0.0.1:5000/api/predict
+  - CLI:      python -m src.predict --municipio <MUN> --estado <EST> --fecha <YYYY-MM-DD>
+================================================================================
+
+--------------------------------------------------------------------------------
+PART 1: GEOGRAPHICALLY DIVERSE FUTURE TEST CASES (WITHIN 15-DAY HORIZON)
+--------------------------------------------------------------------------------
+
+[TEST-01] NORTHWEST — MEDITERRANEAN / ARID
+  State:        Baja California
+  Municipality: Ensenada
+  Target Date:  2026-09-05 (Today + 2 Days)
+  CVEGEO:       02001
+  Coordinates:  31.8667, -116.5964
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Valid probability calculation, low-to-medium risk range.
+  CLI Command:
+    python -m src.predict --municipio "Ensenada" --estado "Baja California" --fecha "2026-09-05"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Ensenada\", \"estado\": \"Baja California\", \"fecha\": \"2026-09-05\"}"
+  JSON Payload:
+    {"municipio": "Ensenada", "estado": "Baja California", "fecha": "2026-09-05"}
+
+--------------------------------------------------------------------------------
+
+[TEST-02] NORTH / SIERRA MADRE OCCIDENTAL — HIGH HISTORICAL ACTIVITY
+  State:        Chihuahua
+  Municipality: Guadalupe y Calvo
+  Target Date:  2026-09-07 (Today + 4 Days)
+  CVEGEO:       08029
+  Coordinates:  26.0945, -106.9628
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Valid probability calculation, high historical baseline (2,676 recorded fires).
+  CLI Command:
+    python -m src.predict --municipio "Guadalupe y Calvo" --estado "Chihuahua" --fecha "2026-09-07"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Guadalupe y Calvo\", \"estado\": \"Chihuahua\", \"fecha\": \"2026-09-07\"}"
+  JSON Payload:
+    {"municipio": "Guadalupe y Calvo", "estado": "Chihuahua", "fecha": "2026-09-07"}
+
+--------------------------------------------------------------------------------
+
+[TEST-03] NORTH-CENTRAL — PINE-OAK FOREST HIGHLANDS
+  State:        Durango
+  Municipality: Pueblo Nuevo
+  Target Date:  2026-09-08 (Today + 5 Days)
+  CVEGEO:       10023
+  Coordinates:  23.3833, -105.3833
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Valid probability calculation, mountain weather reanalysis/forecast.
+  CLI Command:
+    python -m src.predict --municipio "Pueblo Nuevo" --estado "Durango" --fecha "2026-09-08"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Pueblo Nuevo\", \"estado\": \"Durango\", \"fecha\": \"2026-09-08\"}"
+  JSON Payload:
+    {"municipio": "Pueblo Nuevo", "estado": "Durango", "fecha": "2026-09-08"}
+
+--------------------------------------------------------------------------------
+
+[TEST-04] WEST / PACIFIC HIGHLANDS — METROPOLITAN WILDLAND-URBAN INTERFACE
+  State:        Jalisco
+  Municipality: Zapopan
+  Target Date:  2026-09-10 (Today + 7 Days)
+  CVEGEO:       14120
+  Coordinates:  20.7167, -103.4000
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     La Primavera forest area; checks high-density historical features.
+  CLI Command:
+    python -m src.predict --municipio "Zapopan" --estado "Jalisco" --fecha "2026-09-10"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Zapopan\", \"estado\": \"Jalisco\", \"fecha\": \"2026-09-10\"}"
+  JSON Payload:
+    {"municipio": "Zapopan", "estado": "Jalisco", "fecha": "2026-09-10"}
+
+--------------------------------------------------------------------------------
+
+[TEST-05] CENTRAL HIGHLANDS — VALLE DE MEXICO VOLCANIC BELT
+  State:        Mexico City (Ciudad de Mexico)
+  Municipality: Tlalpan
+  Target Date:  2026-09-11 (Today + 8 Days)
+  CVEGEO:       09012
+  Coordinates:  19.2892, -99.1683
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Ajusco mountainous conservation zone, high ignition density area.
+  CLI Command:
+    python -m src.predict --municipio "Tlalpan" --estado "Mexico City" --fecha "2026-09-11"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Tlalpan\", \"estado\": \"Mexico City\", \"fecha\": \"2026-09-11\"}"
+  JSON Payload:
+    {"municipio": "Tlalpan", "estado": "Mexico City", "fecha": "2026-09-11"}
+
+--------------------------------------------------------------------------------
+
+[TEST-06] CENTRAL / VOLCANIC HIGHLANDS — AVOCADO BELT & PINE ECOSYSTEM
+  State:        Michoacan
+  Municipality: Uruapan
+  Target Date:  2026-09-12 (Today + 9 Days)
+  CVEGEO:       16102
+  Coordinates:  19.4167, -102.0667
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Monarch butterfly and western Sierra Madre pine-oak biome.
+  CLI Command:
+    python -m src.predict --municipio "Uruapan" --estado "Michoacan" --fecha "2026-09-12"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Uruapan\", \"estado\": \"Michoacan\", \"fecha\": \"2026-09-12\"}"
+  JSON Payload:
+    {"municipio": "Uruapan", "estado": "Michoacan", "fecha": "2026-09-12"}
+
+--------------------------------------------------------------------------------
+
+[TEST-07] BAJIO / NORTH-CENTRAL — CANYON & SCRUBLAND
+  State:        Aguascalientes
+  Municipality: Calvillo
+  Target Date:  2026-09-13 (Today + 10 Days)
+  CVEGEO:       01003
+  Coordinates:  21.8566, -102.7225
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Sierra del Laurel transition zone; standard verification reference.
+  CLI Command:
+    python -m src.predict --municipio "Calvillo" --estado "Aguascalientes" --fecha "2026-09-13"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Calvillo\", \"estado\": \"Aguascalientes\", \"fecha\": \"2026-09-13\"}"
+  JSON Payload:
+    {"municipio": "Calvillo", "estado": "Aguascalientes", "fecha": "2026-09-13"}
+
+--------------------------------------------------------------------------------
+
+[TEST-08] CENTRAL / STATE OF MEXICO — NEVADO DE TOLUCA BIOSPHERE
+  State:        State of Mexico (Mexico)
+  Municipality: Valle de Bravo
+  Target Date:  2026-09-14 (Today + 11 Days)
+  CVEGEO:       15110
+  Coordinates:  19.1931, -100.1311
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Lake basin with high forest coverage and historical pressure.
+  CLI Command:
+    python -m src.predict --municipio "Valle de Bravo" --estado "State of Mexico" --fecha "2026-09-14"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Valle de Bravo\", \"estado\": \"State of Mexico\", \"fecha\": \"2026-09-14\"}"
+  JSON Payload:
+    {"municipio": "Valle de Bravo", "estado": "State of Mexico", "fecha": "2026-09-14"}
+
+--------------------------------------------------------------------------------
+
+[TEST-09] GULF COAST / SIERRA MADRE ORIENTAL — COLD CLOUD FOREST & PINE
+  State:        Veracruz
+  Municipality: Perote
+  Target Date:  2026-09-15 (Today + 12 Days)
+  CVEGEO:       30128
+  Coordinates:  19.5611, -97.2428
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Cofre de Perote national park; checks high-altitude humidity factors.
+  CLI Command:
+    python -m src.predict --municipio "Perote" --estado "Veracruz" --fecha "2026-09-15"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Perote\", \"estado\": \"Veracruz\", \"fecha\": \"2026-09-15\"}"
+  JSON Payload:
+    {"municipio": "Perote", "estado": "Veracruz", "fecha": "2026-09-15"}
+
+--------------------------------------------------------------------------------
+
+[TEST-10] SOUTHERN SIERRA MADRE — BIODIVERSITY CORRIDOR
+  State:        Oaxaca
+  Municipality: Oaxaca de Juarez
+  Target Date:  2026-09-16 (Today + 13 Days)
+  CVEGEO:       20067
+  Coordinates:  17.0654, -96.7236
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Central Valles region; state has highest total number of municipalities.
+  CLI Command:
+    python -m src.predict --municipio "Oaxaca de Juarez" --estado "Oaxaca" --fecha "2026-09-16"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Oaxaca de Juarez\", \"estado\": \"Oaxaca\", \"fecha\": \"2026-09-16\"}"
+  JSON Payload:
+    {"municipio": "Oaxaca de Juarez", "estado": "Oaxaca", "fecha": "2026-09-16"}
+
+--------------------------------------------------------------------------------
+
+[TEST-11] SOUTHEAST / CHIAPAS HIGHLANDS — TROPICAL DRY & PINE FOREST
+  State:        Chiapas
+  Municipality: Villaflores
+  Target Date:  2026-09-17 (Today + 14 Days)
+  CVEGEO:       07108
+  Coordinates:  16.2333, -93.2667
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Frailesca region with intensive agricultural-forest interface.
+  CLI Command:
+    python -m src.predict --municipio "Villaflores" --estado "Chiapas" --fecha "2026-09-17"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Villaflores\", \"estado\": \"Chiapas\", \"fecha\": \"2026-09-17\"}"
+  JSON Payload:
+    {"municipio": "Villaflores", "estado": "Chiapas", "fecha": "2026-09-17"}
+
+--------------------------------------------------------------------------------
+
+[TEST-12] YUCATAN PENINSULA / CARIBBEAN — LOWLAND RAINFOREST BIOSPHERE
+  State:        Quintana Roo
+  Municipality: Othon P. Blanco
+  Target Date:  2026-09-18 (Today + 15 Days — EXACT MAXIMUM HORIZON BOUNDARY)
+  CVEGEO:       23004
+  Coordinates:  18.5036, -88.3053
+  Data Source:  Open-Meteo forecast (16-day)
+  Expected:     Chelem and southern Yucatan jungle; verifies exact 15-day ceiling boundary.
+  CLI Command:
+    python -m src.predict --municipio "Othon P. Blanco" --estado "Quintana Roo" --fecha "2026-09-18"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Othon P. Blanco\", \"estado\": \"Quintana Roo\", \"fecha\": \"2026-09-18\"}"
+  JSON Payload:
+    {"municipio": "Othon P. Blanco", "estado": "Quintana Roo", "fecha": "2026-09-18"}
+
+================================================================================
+PART 2: BOUNDARY & VALIDATION EDGE CASES (HORIZON LIMIT ENFORCEMENT)
+================================================================================
+
+[TEST-13] BOUNDARY SUCCESS: TODAY'S LIVE DATE
+  State:        Aguascalientes
+  Municipality: Calvillo
+  Target Date:  2026-09-03 (Today)
+  Expected:     Success. Seamless switch between ERA5 archive / live forecast.
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Calvillo\", \"estado\": \"Aguascalientes\", \"fecha\": \"2026-09-03\"}"
+
+--------------------------------------------------------------------------------
+
+[TEST-14] BOUNDARY FAILURE: HORIZON + 1 DAY (REJECTION TEST)
+  State:        Aguascalientes
+  Municipality: Calvillo
+  Target Date:  2026-09-19 (Today + 16 Days)
+  Expected:     Rejection (HTTP 200/400 warning).
+                "Date '2026-09-19' exceeds the forecast horizon (2026-09-18). Maximum allowed: today + 15 days."
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Calvillo\", \"estado\": \"Aguascalientes\", \"fecha\": \"2026-09-19\"}"
+
+--------------------------------------------------------------------------------
+
+[TEST-15] EXTREME OUT-OF-BOUNDS DATE (FAR FUTURE)
+  State:        Jalisco
+  Municipality: Zapopan
+  Target Date:  2027-01-01
+  Expected:     Clean rejection with warning message indicating horizon limit.
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Zapopan\", \"estado\": \"Jalisco\", \"fecha\": \"2027-01-01\"}"
+
+================================================================================
+PART 3: AUTOMATED EXECUTION SCRIPTS
+================================================================================
+
+--- PowerShell Batch Script (Windows) ---
+Save as: run_future_tests.ps1
+
+$cases = @(
+  @{ mun="Ensenada";           est="Baja California";  date="2026-09-05" },
+  @{ mun="Guadalupe y Calvo";  est="Chihuahua";        date="2026-09-07" },
+  @{ mun="Zapopan";            est="Jalisco";          date="2026-09-10" },
+  @{ mun="Tlalpan";            est="Mexico City";      date="2026-09-11" },
+  @{ mun="Uruapan";            est="Michoacan";        date="2026-09-12" },
+  @{ mun="Calvillo";           est="Aguascalientes";   date="2026-09-13" },
+  @{ mun="Valle de Bravo";     est="State of Mexico";  date="2026-09-14" },
+  @{ mun="Perote";             est="Veracruz";         date="2026-09-15" },
+  @{ mun="Oaxaca de Juarez";   est="Oaxaca";           date="2026-09-16" },
+  @{ mun="Othon P. Blanco";    est="Quintana Roo";     date="2026-09-18" },
+  @{ mun="Calvillo";           est="Aguascalientes";   date="2026-09-19" } # Edge case check
+)
+
+foreach ($c in $cases) {
+    Write-Host "Testing $($c.mun), $($c.est) for $($c.date)..." -ForegroundColor Cyan
+    $body = $c | ConvertTo-Json
+    $res = Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/predict" -Method Post -Body $body -ContentType "application/json"
+    if ($res.warning) {
+        Write-Host "  -> Warning/Boundary: $($res.warning)" -ForegroundColor Yellow
+    } else {
+        Write-Host "  -> Probability: $($res.probability)% | Risk: $($res.risk_level) | Source: $($res.data_source)" -ForegroundColor Green
+    }
+}
+
+--- Bash Script (Linux / macOS / WSL) ---
+Save as: run_future_tests.sh
+
+#!/bin/bash
+TEST_CASES=(
+  '{"municipio":"Ensenada","estado":"Baja California","fecha":"2026-09-05"}'
+  '{"municipio":"Guadalupe y Calvo","estado":"Chihuahua","fecha":"2026-09-07"}'
+  '{"municipio":"Zapopan","estado":"Jalisco","fecha":"2026-09-10"}'
+  '{"municipio":"Tlalpan","estado":"Mexico City","fecha":"2026-09-11"}'
+  '{"municipio":"Uruapan","estado":"Michoacan","fecha":"2026-09-12"}'
+  '{"municipio":"Calvillo","estado":"Aguascalientes","fecha":"2026-09-13"}'
+  '{"municipio":"Valle de Bravo","estado":"State of Mexico","fecha":"2026-09-14"}'
+  '{"municipio":"Perote","estado":"Veracruz","fecha":"2026-09-15"}'
+  '{"municipio":"Oaxaca de Juarez","estado":"Oaxaca","fecha":"2026-09-16"}'
+  '{"municipio":"Othon P. Blanco","estado":"Quintana Roo","fecha":"2026-09-18"}'
+  '{"municipio":"Calvillo","estado":"Aguascalientes","fecha":"2026-09-19"}'
+)
+
+for payload in "${TEST_CASES[@]}"; do
+  echo "Executing: $payload"
+  curl -s -X POST http://127.0.0.1:5000/api/predict \
+       -H "Content-Type: application/json" \
+       -d "$payload" | jq '.'
+  echo "----------------------------------------------------"
+done
+================================================================================

@@ -1,0 +1,30 @@
+# Python & virtual environment
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Environment & credentials
+.env
+
+# Large datasets
+data/raw/
+data/interim/
+data/processed/
+data/external/weather/
+*.parquet
+
+# Large ML model binaries (>100MB exceeds GitHub push limits)
+models/*
+!models/risk_thresholds.json
+!models/__init__.py
+*.joblib
+
+# Reports generated artifacts
+reports/figures/
+reports/results/

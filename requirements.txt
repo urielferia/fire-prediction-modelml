@@ -1,0 +1,41 @@
+# Forest Fire Risk Prediction in Mexico
+# Requirements — pinned for reproducibility
+
+# Core data
+pandas>=2.0,<3.0
+numpy>=1.24
+pyarrow>=14.0
+
+# Machine Learning
+scikit-learn>=1.3,<2.0
+lightgbm>=4.0
+
+# Explainability
+shap>=0.43
+
+# Weather API
+openmeteo-requests
+requests-cache
+retry-requests
+
+# Visualization
+matplotlib>=3.7
+seaborn>=0.13
+
+# Notebooks
+jupyter
+ipykernel
+
+# Geospatial (for coordinate utilities)
+geopy
+
+# Testing
+pytest>=7.0
+
+# Web Application
+flask>=3.0
+flask-cors
+
+# Utilities
+python-dotenv
+tqdm

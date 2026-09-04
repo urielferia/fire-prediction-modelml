@@ -1,0 +1,340 @@
+================================================================================
+TAYUN WILDFIRE RISK PREDICTION — HISTORICAL FIRE EVENT TEST EXAMPLES
+================================================================================
+Historical Archive Coverage: 2015 through 2025 (CONAFOR Wildfire Database)
+Meteorological Source: Open-Meteo ERA5 Atmospheric Reanalysis Archive
+Purpose: Demonstrates the application as an interactive historical data center
+         and forensic diagnostic tool for major wildfire events in Mexico.
+Endpoints:
+  - Web UI:   http://127.0.0.1:5000/
+  - API POST: http://127.0.0.1:5000/api/predict
+  - CLI:      python -m src.predict --municipio <MUN> --estado <EST> --fecha <YYYY-MM-DD>
+================================================================================
+
+--------------------------------------------------------------------------------
+PART 1: MAJOR VERIFIED HISTORICAL WILDFIRE EVENTS ACROSS MEXICO
+--------------------------------------------------------------------------------
+
+[HIST-01] NORTHEAST — LA PINALOSA / SIERRA DE ARTEAGA WILDFIRE (2021)
+  State:             Coahuila
+  Municipality:      Arteaga
+  Ignition Date:     2021-03-16
+  CVEGEO:            05004
+  Coordinates:       25.3491, -100.6665
+  Historical Impact: 3,630.0 hectares burned (Pine-Oak Forest)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Extreme drought (31 consecutive dry days, 12.3% RH, 31.4°C max temp).
+  Model Prediction:  11.50% [MEDIUM RISK] (~12x above average daily baseline).
+  CLI Command:
+    python -m src.predict --municipio "Arteaga" --estado "Coahuila" --fecha "2021-03-16"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Arteaga\", \"estado\": \"Coahuila\", \"fecha\": \"2021-03-16\"}"
+  JSON Payload:
+    {"municipio": "Arteaga", "estado": "Coahuila", "fecha": "2021-03-16"}
+
+--------------------------------------------------------------------------------
+
+[HIST-02] WEST / JALISCO — BOSQUE LA PRIMAVERA CATASTROPHIC FIRE (2021)
+  State:             Jalisco
+  Municipality:      Zapopan
+  Ignition Date:     2021-03-31
+  CVEGEO:            14120
+  Coordinates:       20.7545, -103.4713
+  Historical Impact: 4,872.8 hectares burned (Oak-Pine Forest, Guadalajara WUI)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Severe heat wave (35.7°C max temp, 21.3% RH, 60 consecutive dry days).
+  Model Prediction:  21.09% [HIGH RISK] (Exceeds 99th percentile threshold).
+  CLI Command:
+    python -m src.predict --municipio "Zapopan" --estado "Jalisco" --fecha "2021-03-31"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Zapopan\", \"estado\": \"Jalisco\", \"fecha\": \"2021-03-31\"}"
+  JSON Payload:
+    {"municipio": "Zapopan", "estado": "Jalisco", "fecha": "2021-03-31"}
+
+--------------------------------------------------------------------------------
+
+[HIST-03] NORTHWEST — SANTA ANA WIND WILDFIRE FIRE COMPLEX (2019)
+  State:             Baja California
+  Municipality:      Ensenada
+  Ignition Date:     2019-10-24
+  CVEGEO:            02001
+  Coordinates:       31.8667, -116.5964
+  Historical Impact: 21,795.5 hectares burned (Coastal Chaparral / Scrubland)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Offshore Santa Ana wind event, low humidity, dry autumn fuel bed.
+  Model Prediction:  Validated historical ignition zone.
+  CLI Command:
+    python -m src.predict --municipio "Ensenada" --estado "Baja California" --fecha "2019-10-24"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Ensenada\", \"estado\": \"Baja California\", \"fecha\": \"2019-10-24\"}"
+  JSON Payload:
+    {"municipio": "Ensenada", "estado": "Baja California", "fecha": "2019-10-24"}
+
+--------------------------------------------------------------------------------
+
+[HIST-04] SOUTH / ISTHMUS — LOS CHIMALAPAS MEGA-FIRE (2019)
+  State:             Oaxaca
+  Municipality:      San Miguel Chimalapa
+  Ignition Date:     2019-04-19
+  CVEGEO:            20265
+  Coordinates:       16.6221, -94.5089
+  Historical Impact: 20,350.0 hectares burned (Tropical Pine-Oak Rainforest)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Severe spring dry season in southern biodiversity corridor.
+  Model Prediction:  Elevated fire pressure across Isthmus of Tehuantepec.
+  CLI Command:
+    python -m src.predict --municipio "San Miguel Chimalapa" --estado "Oaxaca" --fecha "2019-04-19"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"San Miguel Chimalapa\", \"estado\": \"Oaxaca\", \"fecha\": \"2019-04-19\"}"
+  JSON Payload:
+    {"municipio": "San Miguel Chimalapa", "estado": "Oaxaca", "fecha": "2019-04-19"}
+
+--------------------------------------------------------------------------------
+
+[HIST-05] NORTH / SIERRA OCCIDENTAL — GUADALUPE Y CALVO FOREST FIRE (2023)
+  State:             Chihuahua
+  Municipality:      Guadalupe y Calvo
+  Ignition Date:     2023-05-18
+  CVEGEO:            08029
+  Coordinates:       26.0945, -106.9628
+  Historical Impact: 5,238.8 hectares burned (Pine-Oak Mountain Complex)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Late spring pre-monsoon peak heat, remote mountain terrain.
+  Model Prediction:  High regional fire pressure.
+  CLI Command:
+    python -m src.predict --municipio "Guadalupe y Calvo" --estado "Chihuahua" --fecha "2023-05-18"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Guadalupe y Calvo\", \"estado\": \"Chihuahua\", \"fecha\": \"2023-05-18\"}"
+  JSON Payload:
+    {"municipio": "Guadalupe y Calvo", "estado": "Chihuahua", "fecha": "2023-05-18"}
+
+--------------------------------------------------------------------------------
+
+[HIST-06] NORTH-CENTRAL / DURANGO — PUEBLO NUEVO SIERRA WILDFIRE (2021)
+  State:             Durango
+  Municipality:      Pueblo Nuevo
+  Ignition Date:     2021-04-15
+  CVEGEO:            10023
+  Coordinates:       23.3833, -105.3833
+  Historical Impact: 9,300.0 hectares burned (Highland Pine Forest)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        April peak fire season in Mexico's top timber-producing reserve.
+  Model Prediction:  Strong multi-week drought and low relative humidity features.
+  CLI Command:
+    python -m src.predict --municipio "Pueblo Nuevo" --estado "Durango" --fecha "2021-04-15"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Pueblo Nuevo\", \"estado\": \"Durango\", \"fecha\": \"2021-04-15\"}"
+  JSON Payload:
+    {"municipio": "Pueblo Nuevo", "estado": "Durango", "fecha": "2021-04-15"}
+
+--------------------------------------------------------------------------------
+
+[HIST-07] CENTRAL / MICHOACAN — CERRO DE LA CRUZ & URUAPAN MOUNTAIN FIRE (2022)
+  State:             Michoacan
+  Municipality:      Uruapan
+  Ignition Date:     2022-05-09
+  CVEGEO:            16102
+  Coordinates:       19.4167, -102.0667
+  Historical Impact: 2,697.1 hectares burned (Pine-Oak / Agro-forest Interface)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Pre-monsoon heat, prolonged dry spell, steep volcanic topography.
+  Model Prediction:  Elevated risk reflecting high municipal historical frequency.
+  CLI Command:
+    python -m src.predict --municipio "Uruapan" --estado "Michoacan" --fecha "2022-05-09"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Uruapan\", \"estado\": \"Michoacan\", \"fecha\": \"2022-05-09\"}"
+  JSON Payload:
+    {"municipio": "Uruapan", "estado": "Michoacan", "fecha": "2022-05-09"}
+
+--------------------------------------------------------------------------------
+
+[HIST-08] CENTRAL / MORELOS — EL TEPOZTECO NATIONAL PARK WILDFIRE (2025)
+  State:             Morelos
+  Municipality:      Tepoztlan
+  Ignition Date:     2025-04-09
+  CVEGEO:            17020
+  Coordinates:       19.0096, -99.0505
+  Historical Impact: 1,380.7 hectares burned (Cloud Forest / Mountain Biosphere)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        High wind gusts through mountain passes, complex rugged topography.
+  Model Prediction:  Recent 2025 holdout dataset test case.
+  CLI Command:
+    python -m src.predict --municipio "Tepoztlan" --estado "Morelos" --fecha "2025-04-09"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Tepoztlan\", \"estado\": \"Morelos\", \"fecha\": \"2025-04-09\"}"
+  JSON Payload:
+    {"municipio": "Tepoztlan", "estado": "Morelos", "fecha": "2025-04-09"}
+
+--------------------------------------------------------------------------------
+
+[HIST-09] GULF / VERACRUZ — COFRE DE PEROTE MOUNTAIN FIRE (2019)
+  State:             Veracruz
+  Municipality:      Perote
+  Ignition Date:     2019-05-08
+  CVEGEO:            30128
+  Coordinates:       19.5611, -97.2428
+  Historical Impact: 1,045.2 hectares burned (Desert Scrub & Subalpine Conifer)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        High thermal range, dry rain-shadow valley west of Cofre de Perote.
+  Model Prediction:  Captures eastern Sierra Madre thermal extremes.
+  CLI Command:
+    python -m src.predict --municipio "Perote" --estado "Veracruz" --fecha "2019-05-08"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Perote\", \"estado\": \"Veracruz\", \"fecha\": \"2019-05-08\"}"
+  JSON Payload:
+    {"municipio": "Perote", "estado": "Veracruz", "fecha": "2019-05-08"}
+
+--------------------------------------------------------------------------------
+
+[HIST-10] CENTRAL / STATE OF MEXICO — VALLE DE BRAVO BASIN FIRE (2021)
+  State:             State of Mexico (Mexico)
+  Municipality:      Valle de Bravo
+  Ignition Date:     2021-04-20
+  CVEGEO:            15110
+  Coordinates:       19.1931, -100.1311
+  Historical Impact: 996.0 hectares burned (Pine Forest / Conservation Basin)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Peak April dry season, low relative humidity, human ignition pressure.
+  Model Prediction:  Captures regional fire clustering across State of Mexico.
+  CLI Command:
+    python -m src.predict --municipio "Valle de Bravo" --estado "State of Mexico" --fecha "2021-04-20"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Valle de Bravo\", \"estado\": \"State of Mexico\", \"fecha\": \"2021-04-20\"}"
+  JSON Payload:
+    {"municipio": "Valle de Bravo", "estado": "State of Mexico", "fecha": "2021-04-20"}
+
+--------------------------------------------------------------------------------
+
+[HIST-11] SOUTHEAST / CHIAPAS — SIERRA MADRE DE CHIAPAS WILDFIRE (2024)
+  State:             Chiapas
+  Municipality:      Villaflores
+  Ignition Date:     2024-04-02
+  CVEGEO:            07108
+  Coordinates:       16.2333, -93.2667
+  Historical Impact: 3,865.8 hectares burned (Oak-Pine & Tropical Dry Forest)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        El Nino-associated dry conditions across southern Mexico.
+  Model Prediction:  High cumulative monthly regional fire pressure.
+  CLI Command:
+    python -m src.predict --municipio "Villaflores" --estado "Chiapas" --fecha "2024-04-02"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Villaflores\", \"estado\": \"Chiapas\", \"fecha\": \"2024-04-02\"}"
+  JSON Payload:
+    {"municipio": "Villaflores", "estado": "Chiapas", "fecha": "2024-04-02"}
+
+--------------------------------------------------------------------------------
+
+[HIST-12] CARIBBEAN / YUCATAN PENINSULA — BACALAR JUNGLE FIRE (2024)
+  State:             Quintana Roo
+  Municipality:      Bacalar
+  Ignition Date:     2024-05-18
+  CVEGEO:            23010
+  Coordinates:       18.6811, -88.3933
+  Historical Impact: 13,671.4 hectares burned (Sub-perennial Tropical Rainforest)
+  Data Source:       ERA5 reanalysis (archive)
+  Conditions:        Exceptional 2024 southern heat wave & extended drought spell.
+  Model Prediction:  High tropical fuel vulnerability under drought conditions.
+  CLI Command:
+    python -m src.predict --municipio "Bacalar" --estado "Quintana Roo" --fecha "2024-05-18"
+  cURL Command:
+    curl -X POST http://127.0.0.1:5000/api/predict -H "Content-Type: application/json" -d "{\"municipio\": \"Bacalar\", \"estado\": \"Quintana Roo\", \"fecha\": \"2024-05-18\"}"
+  JSON Payload:
+    {"municipio": "Bacalar", "estado": "Quintana Roo", "fecha": "2024-05-18"}
+
+================================================================================
+PART 2: SEASONAL CONTRAST TESTS (PEAK FIRE SEASON VS. RAINY SEASON)
+================================================================================
+Demonstrates the sensitivity of the model to seasonal meteorological shifts
+for the same municipality.
+
+[CONTRAST-01A] ZAPOPAN, JALISCO — DRY SEASON WILDFIRE PEAK
+  Date:        2021-03-31 (Bosque La Primavera wildfire)
+  Conditions:  35.7°C, 21% Humidity, 0 mm rain in 30 days
+  Expected:    HIGH RISK (~21.1%)
+  Payload:     {"municipio": "Zapopan", "estado": "Jalisco", "fecha": "2021-03-31"}
+
+[CONTRAST-01B] ZAPOPAN, JALISCO — RAINY SUMMER BASELINE
+  Date:        2021-08-15 (Mid-summer monsoon)
+  Conditions:  High humidity, active rainfall, saturated soil moisture
+  Expected:    LOW RISK (< 1.0%)
+  Payload:     {"municipio": "Zapopan", "estado": "Jalisco", "fecha": "2021-08-15"}
+
+--------------------------------------------------------------------------------
+
+[CONTRAST-02A] ARTEAGA, COAHUILA — SPRING DROUGHT FIRE
+  Date:        2021-03-16 (La Pinalosa fire)
+  Conditions:  31.4°C, 12% Humidity, 31 consecutive dry days
+  Expected:    ELEVATED RISK [MEDIUM] (~11.5%)
+  Payload:     {"municipio": "Arteaga", "estado": "Coahuila", "fecha": "2021-03-16"}
+
+[CONTRAST-02B] ARTEAGA, COAHUILA — WINTER LOW-RISK BASELINE
+  Date:        2021-12-15 (Cold winter baseline)
+  Conditions:  Cool temperatures, stable winter atmosphere
+  Expected:    LOW RISK (< 1.0%)
+  Payload:     {"municipio": "Arteaga", "estado": "Coahuila", "fecha": "2021-12-15"}
+
+================================================================================
+PART 3: AUTOMATED EXECUTION SCRIPTS
+================================================================================
+
+--- PowerShell Batch Script (Windows) ---
+Save as: run_historical_tests.ps1
+
+$cases = @(
+  @{ mun="Arteaga";              est="Coahuila";         date="2021-03-16" }, # 3,630 ha
+  @{ mun="Zapopan";              est="Jalisco";          date="2021-03-31" }, # 4,872 ha
+  @{ mun="Ensenada";             est="Baja California";  date="2019-10-24" }, # 21,795 ha
+  @{ mun="San Miguel Chimalapa"; est="Oaxaca";           date="2019-04-19" }, # 20,350 ha
+  @{ mun="Guadalupe y Calvo";    est="Chihuahua";        date="2023-05-18" }, # 5,238 ha
+  @{ mun="Pueblo Nuevo";         est="Durango";          date="2021-04-15" }, # 9,300 ha
+  @{ mun="Uruapan";              est="Michoacan";        date="2022-05-09" }, # 2,697 ha
+  @{ mun="Tepoztlan";            est="Morelos";          date="2025-04-09" }, # 1,380 ha
+  @{ mun="Perote";               est="Veracruz";         date="2019-05-08" }, # 1,045 ha
+  @{ mun="Valle de Bravo";       est="State of Mexico";  date="2021-04-20" }, # 996 ha
+  @{ mun="Villaflores";          est="Chiapas";          date="2024-04-02" }, # 3,865 ha
+  @{ mun="Bacalar";              est="Quintana Roo";     date="2024-05-18" }  # 13,671 ha
+)
+
+Write-Host "Running Historical Wildfire Verification Tests..." -ForegroundColor Cyan
+
+foreach ($c in $cases) {
+    Write-Host "Querying $($c.mun), $($c.est) on $($c.date)..." -ForegroundColor Yellow
+    $body = $c | ConvertTo-Json
+    $res = Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/predict" -Method Post -Body $body -ContentType "application/json"
+    
+    $prob = $res.probability
+    $risk = $res.risk_level
+    $tmax = $res.weather.temp_max_c
+    $rh   = $res.weather.relative_humidity_pct
+    $dry  = $res.weather.consecutive_dry_days
+    
+    Write-Host "  -> Probability: $prob% | Risk: $risk | Tmax: ${tmax}°C | Humidity: ${rh}% | Dry days: $dry" -ForegroundColor Green
+}
+
+--- Bash Script (Linux / macOS / WSL) ---
+Save as: run_historical_tests.sh
+
+#!/bin/bash
+TEST_CASES=(
+  '{"municipio":"Arteaga","estado":"Coahuila","fecha":"2021-03-16"}'
+  '{"municipio":"Zapopan","estado":"Jalisco","fecha":"2021-03-31"}'
+  '{"municipio":"Ensenada","estado":"Baja California","fecha":"2019-10-24"}'
+  '{"municipio":"San Miguel Chimalapa","estado":"Oaxaca","fecha":"2019-04-19"}'
+  '{"municipio":"Guadalupe y Calvo","estado":"Chihuahua","fecha":"2023-05-18"}'
+  '{"municipio":"Pueblo Nuevo","estado":"Durango","fecha":"2021-04-15"}'
+  '{"municipio":"Uruapan","estado":"Michoacan","fecha":"2022-05-09"}'
+  '{"municipio":"Tepoztlan","estado":"Morelos","fecha":"2025-04-09"}'
+  '{"municipio":"Perote","estado":"Veracruz","fecha":"2019-05-08"}'
+  '{"municipio":"Valle de Bravo","estado":"State of Mexico","fecha":"2021-04-20"}'
+  '{"municipio":"Villaflores","estado":"Chiapas","fecha":"2024-04-02"}'
+  '{"municipio":"Bacalar","estado":"Quintana Roo","fecha":"2024-05-18"}'
+)
+
+for payload in "${TEST_CASES[@]}"; do
+  echo "Testing historical fire: $payload"
+  curl -s -X POST http://127.0.0.1:5000/api/predict \
+       -H "Content-Type: application/json" \
+       -d "$payload" | jq '{municipio, estado, date, probability, risk_level, weather: {temp_max_c: .weather.temp_max_c, relative_humidity_pct: .weather.relative_humidity_pct, consecutive_dry_days: .weather.consecutive_dry_days}}'
+  echo "----------------------------------------------------"
+done
+================================================================================

@@ -17,12 +17,26 @@ tayun-fire/
 │   ├── features/     # Feature engineering modules (temporal, weather, historical, static)
 │   └── models/       # Training, evaluation, calibration, explainability
 ├── notebooks/        # EDA Jupyter notebooks (01_temporal through 04_class_distribution)
+├── static/           # Interactive web map assets (HTML, CSS, JS)
+├── docs/             # Application and pipeline documentation
 ├── models/           # Serialized trained models & calibrator
 ├── reports/          # Visualizations, comparison CSVs, final_report.md
 └── tests/            # Pytest test suite
 ```
 
-## Quick Start — Quick Prediction
+## Interactive Map Web Application
+
+An interactive web map built with Flask and Leaflet.js (CartoDB Positron light basemap). Users can select any Mexican state and municipality, query any calendar date up to **today + 15 days**, and view animated predictions with color-coded risk levels.
+
+```bash
+# Launch the interactive web server
+python app.py --debug
+```
+Open **http://127.0.0.1:5000** in your web browser.
+
+> 📖 **Full Application Documentation**: See [docs/interactive_map.md](docs/interactive_map.md) for architecture, API specifications, and design system tokens.
+
+## Quick Start — CLI Prediction
 
 To predict the wildfire probability for a specific municipality and date:
 
